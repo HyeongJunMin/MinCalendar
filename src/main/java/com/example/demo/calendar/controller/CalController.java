@@ -37,18 +37,18 @@ public class CalController {
 		log.info("Calendar month view");
 		
 		//요청날짜 정보가 없으면 현재날짜로 설정
-		int reqYear = 0, reqMonth = 0, reqDate = 0;
-		try {
-			reqYear = (calReq.getReqYear() == 0 )?Calendar.getInstance().get(Calendar.YEAR):calReq.getReqYear();
-			reqMonth = (calReq.getReqMonth() == 0 )?Calendar.getInstance().get(Calendar.MONTH):calReq.getReqMonth();
-			reqDate = (calReq.getReqDate() == 0 )?Calendar.getInstance().get(Calendar.DATE):calReq.getReqDate();
-		} catch(Exception e) {
-			e.printStackTrace();
-			log.warn("Exception occured");
-		}
-		
-		
-		model.addAttribute("todayCal", CustomCalendarUtil.getCurrentCalendarInfo(reqYear, reqMonth, reqDate) );
+//		int reqYear = 0, reqMonth = 0, reqDate = 0;
+//		try {
+//			reqYear = (calReq.getReqYear() == 0 )?Calendar.getInstance().get(Calendar.YEAR):calReq.getReqYear();
+//			reqMonth = (calReq.getReqMonth() == 0 )?Calendar.getInstance().get(Calendar.MONTH):calReq.getReqMonth();
+//			reqDate = (calReq.getReqDate() == 0 )?Calendar.getInstance().get(Calendar.DATE):calReq.getReqDate();
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			log.warn("Exception occured");
+//		}
+				
+//		model.addAttribute("todayCal", CustomCalendarUtil.getCurrentCalendarInfo(reqYear, reqMonth, reqDate) );
+		model.addAttribute("todayCal", CustomCalendarUtil.getCurrentCalendarInfo(calReq.getReqYear(), calReq.getReqMonth(), calReq.getReqDate() ) );
 		
 		return "calendar/calendar_month";
 	}
