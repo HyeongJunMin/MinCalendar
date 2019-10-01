@@ -1,7 +1,11 @@
 package com.example.demo.calendar.controller;
 
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +36,17 @@ public class CalController {
 		return "calendar/calendar";
 	}
 	
+	@Autowired
+	private SqlSession ss;
+	
 	@GetMapping(value = "/month")
 	public String calendarMonth(Model model, CalReqDTO calReq) {
 		log.info("Calendar month view");
+		
+		List<String> lst = ss.selectList("common.getList");
+		for(String str : lst) {
+			System.out.println(str);
+		}
 		
 		//요청날짜 정보가 없으면 현재날짜로 설정
 //		int reqYear = 0, reqMonth = 0, reqDate = 0;

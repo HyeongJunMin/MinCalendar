@@ -71,7 +71,8 @@
 		</div>
 		<!-- 일 뷰 -->
 		<div class="tab-pane" id="day" role="tabpanel" aria-labelledby="tab-day">
-			
+		<div class="daily-calendar">
+		</div>
 		</div>
 	</div>
 </div>
