@@ -31,10 +31,10 @@
 		<button class="btn btn-light">Today</button>
 		<div class="ico-arrow">
 			<a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="이전">
-				<i class="material-icons">chevron_left</i>
+				<i class="material-icons" id="move_prev">chevron_left</i>
 			</a>
 			<a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="다음">
-				<i class="material-icons">chevron_right</i>
+				<i class="material-icons" id="move_next">chevron_right</i>
 			</a>
 		</div>
 		<h4></h4>
@@ -61,7 +61,7 @@
 			</div>
 			<div class="monthly-calendar-body">
 				<!-- 달력 초기값 설정 -->
-				<script type="text/javascript">getMonthCalendar();</script>
+				<script type="text/javascript">getMonthCalendar(${todayCal.nowYear},${todayCal.nowMonth});</script>
 			</div>
 		</div>
 			

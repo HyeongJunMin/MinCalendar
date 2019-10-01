@@ -18,21 +18,12 @@ public class CustomCalendarUtil {
      * @return
      */
     public static Map<String, Integer> getCurrentCalendarInfo(){
+    	
     	Map<String, Integer> calData = new HashMap<String, Integer>();
     	
     	Calendar today = Calendar.getInstance();
     	
-    	System.out.println("today!" + today);
-    	
-    	calData.put("nowYear", today.get(Calendar.YEAR) );
-    	calData.put("nowMonth", today.get(Calendar.MONTH) + 1 );
-    	calData.put("dayOfWeek", today.get( Calendar.DAY_OF_WEEK) );// 이번 달의 날짜 시작요일
-    	calData.put("lastDay", today.getActualMaximum(Calendar.DATE));// 이번 달의 마지막 날짜
-    	
-    	//이전 월의 마지막 날짜
-    	int lastMonth = (today.get(Calendar.MONTH) == 0)?11:(today.get(Calendar.MONTH) - 1);
-    	today.set(today.get(Calendar.YEAR), lastMonth, 1);
-    	calData.put("lastMonthLastDay", today.getActualMaximum(Calendar.DATE));
+    	setMapData(calData, today);
     	
     	return calData;
     }
@@ -42,11 +33,22 @@ public class CustomCalendarUtil {
      * @return
      */
     public static Map<String, Integer> getCurrentCalendarInfo(int year, int month, int date){
+    	
     	Map<String, Integer> calData = new HashMap<String, Integer>();
     	
     	Calendar today = Calendar.getInstance();
-    	today.set(year, month, date);
+    	today.set(year, month - 1, date);
     	
+    	setMapData(calData, today);
+    	
+    	return calData;
+    }
+    
+    /**캘린더 렌더링에 필요한 값을 해시맵에 저장하는 메소드
+     * @param calData
+     * @param today
+     */
+    private static void setMapData(Map<String, Integer> calData, Calendar today) {
     	System.out.println("today!" + today);
     	
     	calData.put("nowYear", today.get(Calendar.YEAR) );
@@ -54,11 +56,9 @@ public class CustomCalendarUtil {
     	calData.put("dayOfWeek", today.get(Calendar.DAY_OF_WEEK) );// 이번 달의 날짜 시작요일, 일=1, 토=7
     	calData.put("lastDay", today.getActualMaximum(Calendar.DATE));// 이번 달의 마지막 날짜
     	    	
-    	//이전 월의 마지막 날짜
+    	//이전(지난) 월의 마지막 날짜
     	int lastMonth = (today.get(Calendar.MONTH) == 0)?11:(today.get(Calendar.MONTH) - 1);
     	today.set(today.get(Calendar.YEAR), lastMonth, 1);
     	calData.put("lastMonthLastDay", today.getActualMaximum(Calendar.DATE));
-    	
-    	return calData;
     }
 }
