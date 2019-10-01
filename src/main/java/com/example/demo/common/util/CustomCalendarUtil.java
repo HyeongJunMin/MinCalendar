@@ -1,8 +1,13 @@
 package com.example.demo.common.util;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import com.example.demo.calendar.model.SchedulesDispDTO;
 
 public class CustomCalendarUtil {
 
@@ -44,6 +49,40 @@ public class CustomCalendarUtil {
     	return calData;
     }
     
+    /**년-월에 맞는 일정정보 리턴.
+     * 키 : yyyy-mm-dd 문자열
+     * 밸류 : List<SchedulesDispDTO>
+     * @param scheList
+     * @return
+     */
+    public static Map<String, List<SchedulesDispDTO>> getScheCalMap(List<SchedulesDispDTO> scheList, Map<String, Integer> todayCal) {
+    	Map<String, List<SchedulesDispDTO>> scheCalMap = new HashMap<String, List<SchedulesDispDTO>>();
+		for(SchedulesDispDTO scheItem : scheList) {
+			String sdate = scheItem.getSdate().split(" ")[0];	//키값 산출
+			
+			sdate = (sdate.split("-")[1].equals(todayCal.get("nowMonth")+""))
+					?sdate
+					:todayCal.get("lastYear") + "-" + String.format("%02d", todayCal.get("lastMonth")) + "-" + String.format("%02d", ( todayCal.get("lastMonthLastDay") - todayCal.get("dayOfWeek") + 2 ));
+				    	
+			System.out.println(scheItem.getSdate().split(" ")[0]);
+			if( scheCalMap.get(sdate) == null ) {//키가 없는 경우
+				scheCalMap.put(sdate, new ArrayList<SchedulesDispDTO>() );
+				scheCalMap.get(sdate).add(scheItem);				
+			}else {	//키가 있는 경우
+				scheCalMap.get(sdate).add(scheItem);
+			}
+		}
+		System.out.println("맵사이즈 : " + scheCalMap.size());
+		
+		Iterator<String> it = scheCalMap.keySet().iterator();
+		while(it.hasNext()) {
+			String k = it.next();
+			System.out.println("k : " + k + " , v : " + scheCalMap.get(k).toString());
+		}
+		
+		return scheCalMap;
+    }
+    
     /**캘린더 렌더링에 필요한 값을 해시맵에 저장하는 메소드
      * @param calData
      * @param today
@@ -63,4 +102,5 @@ public class CustomCalendarUtil {
     	calData.put("lastMonth", today.get(Calendar.MONTH) + 1 );
     	calData.put("lastMonthLastDay", today.getActualMaximum(Calendar.DATE));
     }
+    
 }

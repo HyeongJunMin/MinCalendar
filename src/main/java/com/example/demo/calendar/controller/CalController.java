@@ -56,28 +56,12 @@ public class CalController {
 		log.info("Calendar month view");
 						
 		//요청날짜 정보가 없으면 현재날짜로 설정하여 모델에 추가
-		model.addAttribute("todayCal", getCalendarInfo(calReq) ); 
+		Map<String, Integer> todayCal = getCalendarInfo(calReq);
+		model.addAttribute("todayCal", todayCal ); 
 		
 		//년-월에 맞는 일정정보 모델에 추가
 		List<SchedulesDispDTO> scheList = calendarService.getSchedulesByMonth(calReq);
-		Map<String, List<SchedulesDispDTO>> scheCalMap = new HashMap<String, List<SchedulesDispDTO>>();
-		for(SchedulesDispDTO scheItem : scheList) {
-			String sdate = scheItem.getSdate().split(" ")[0];
-			System.out.println(scheItem.getSdate().split(" ")[0]);
-			if( scheCalMap.get(sdate) == null ) {//키가 없는 경우
-				scheCalMap.put(sdate, new ArrayList<SchedulesDispDTO>() );
-				scheCalMap.get(sdate).add(scheItem);				
-			}else {	//키가 있는 경우
-				scheCalMap.get(sdate).add(scheItem);
-			}
-		}
-		System.out.println("맵사이즈 : " + scheCalMap.size());
-		
-		Iterator<String> it = scheCalMap.keySet().iterator();
-		while(it.hasNext()) {
-			String k = it.next();
-			System.out.println("k : " + k + " , v : " + scheCalMap.get(k).toString());
-		}
+		Map<String, List<SchedulesDispDTO>> scheCalMap = CustomCalendarUtil.getScheCalMap(scheList, todayCal);
 		 
 		Set<String> scheCalMapKeySet = scheCalMap.keySet();
 		

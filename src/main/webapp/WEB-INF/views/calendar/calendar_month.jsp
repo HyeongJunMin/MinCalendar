@@ -10,16 +10,37 @@
 <div class="week weeks-in-month">
 	<!-- 이전 월 정보 작성 -->
 	<c:forEach begin="${todayCal.lastMonthLastDay - todayCal.dayOfWeek + 2}" step="1" end="${todayCal.lastMonthLastDay}" var="i" varStatus="j">
-		<div class="day prev-day"><h3 class="day-label">${i }</h3></div>
+		
 		<fmt:formatNumber var="lastDate" minIntegerDigits="2" value="${i}" type="number"/>
 		<fmt:formatNumber var="lastMonth" minIntegerDigits="2" value="${todayCal.lastMonth}" type="number"/>
 		<c:set var="dateString" value="${todayCal.lastYear }-${lastMonth}-${lastDate }"/>
-		<c:out value="${ dateString  }"></c:out>
+		
+		<c:choose>
+			<c:when test="${fn:contains(scheCalMapKeySet, dateString) }">
+				<div class="day prev-day">
+					<h3 class="day-label">${i }</h3>
+					<div class="event-repeated event-start event-end" data-span="8"
+						data-toggle="popover" data-html="true"
+						data-content='<div class="content-line"><div class="event-repeated-marking"></div><div class="title"><h5>일정 1</h5>
+								<h7 class="reservation">2019년 9월 15일 – 17일<span class="reservation-time">⋅오후 2:00~ 3:00</span><span class="repeat-message">⋅매월 반복</span></div>
+				        		</div><div class="content-line"><i class="material-icons">notes</i>
+				        		<div class="title"><h7 class="reservation">스케쥴 메모, 설명이 나타납니다.</div>
+				        		'>반복 일정 2</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="day prev-day"><h3 class="day-label">${i }</h3></div>
+			</c:otherwise>
+		</c:choose>
 	</c:forEach>
 	<!-- 당 월 정보 작성 -->
 	<c:forEach var="i" begin="1" end="${todayCal.lastDay }" step="1">	
+		<fmt:formatNumber var="nowDate" minIntegerDigits="2" value="${i}" type="number"/>
+		<fmt:formatNumber var="nowMonth" minIntegerDigits="2" value="${todayCal.nowMonth}" type="number"/>
+		<c:set var="dateString" value="${todayCal.nowYear }-${nowMonth}-${nowDate }"/>		
+				
 		<c:choose>
-			<c:when test="${i == 26 }">
+			<c:when test="${fn:contains(scheCalMapKeySet, dateString) }">
 				<div class="day curr-day">
 					<h3 class="day-label">${i }</h3>
 					<div class="event-repeated event-start event-end" data-span="8"
@@ -45,10 +66,20 @@
 	
 </div>
 
-<div class="sdfsdfsdf">
-	<h1>sdfklsdjfosdkfj</h1>
+<div class="scheMapTestWrap">
+	<c:if test="${fn:contains(scheCalMapKeySet, '2019-10-02') }">
+		2019-10-02 있음!
+	</c:if>
+	<h1>맵 테스트</h1>
 	<c:forEach items="${scheCalMapKeySet }" var="vv">
 		${vv }
+		<br>
+		<c:set var="scheItems" value="${scheCalMap[vv] }"/>
+		<c:forEach items="${scheItems }" var="scheItem" varStatus="i">
+			${i.count } : ${scheItem }<br>
+		</c:forEach>
+		<br>
+		
 	</c:forEach>
 	
 </div>
