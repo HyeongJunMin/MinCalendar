@@ -39,8 +39,6 @@ public class CustomCalendarUtil {
     	Calendar today = Calendar.getInstance();
     	today.set(year, month - 1, date);
     	
-    	System.out.println("set!!! year:" + year + " , month:" + month);
-    	
     	setMapData(calData, today);
     	
     	return calData;
@@ -51,7 +49,6 @@ public class CustomCalendarUtil {
      * @param today
      */
     private static void setMapData(Map<String, Integer> calData, Calendar today) {
-    	System.out.println("today!" + today);
     	
     	calData.put("nowYear", today.get(Calendar.YEAR) );
     	calData.put("nowMonth", today.get(Calendar.MONTH) + 1 );
