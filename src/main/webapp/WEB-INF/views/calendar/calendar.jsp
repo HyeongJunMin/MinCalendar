@@ -30,7 +30,7 @@
 <input type="hidden" id="_curr_date" value="${todayCal.nowDate }">
 <div class="calendar-container">
 	<div class="calendar-header">
-		<button class="btn btn-light">Today</button>
+		<button class="btn btn-light" id="btn_show_today">Today</button>
 		<div class="ico-arrow">
 			<a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="이전">
 				<i class="material-icons" id="move_prev">chevron_left</i>
@@ -71,11 +71,14 @@
 		</div>
 		<!-- 일 뷰 -->
 		<div class="tab-pane" id="day" role="tabpanel" aria-labelledby="tab-day">
-		<div class="daily-calendar">
+		<div class="daily-calendar-wrap">
+			<!-- 달력 초기값 설정 -->
+			<script type="text/javascript">getDayCalendar(${todayCal.nowYear},${todayCal.nowMonth},${todayCal.nowDate});</script>
 		</div>
 		</div>
 	</div>
 </div>
+
 
 
 </body>

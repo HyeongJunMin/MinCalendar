@@ -52,12 +52,15 @@ public class CustomCalendarUtil {
     	
     	calData.put("nowYear", today.get(Calendar.YEAR) );
     	calData.put("nowMonth", today.get(Calendar.MONTH) + 1 );
+    	calData.put("nowDate", today.get(Calendar.DATE) );
     	calData.put("dayOfWeek", today.get(Calendar.DAY_OF_WEEK) );// 이번 달의 날짜 시작요일, 일=1, 토=7
     	calData.put("lastDay", today.getActualMaximum(Calendar.DATE));// 이번 달의 마지막 날짜
     	    	
     	//이전(지난) 월의 마지막 날짜
     	int lastMonth = (today.get(Calendar.MONTH) == 0)?11:(today.get(Calendar.MONTH) - 1);
     	today.set(today.get(Calendar.YEAR), lastMonth, 1);
+    	calData.put("lastYear", today.get(Calendar.YEAR) );
+    	calData.put("lastMonth", today.get(Calendar.MONTH) + 1 );
     	calData.put("lastMonthLastDay", today.getActualMaximum(Calendar.DATE));
     }
 }

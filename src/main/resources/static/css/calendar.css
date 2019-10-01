@@ -126,7 +126,8 @@ a:hover {
 .week {
   display: grid;
   grid-template-columns: repeat(7, minmax(120px, 1fr));
-  grid-auto-flow: dense;
+  /* grid-auto-flow: dense; */
+  grid-auto-flow: column;
   grid-template-rows: 32px repeat(auto-fill, 32px) 32px;
   grid-gap: 0;
   border-bottom: 1px solid #D7E2EB; }
@@ -180,6 +181,8 @@ a:hover {
       grid-column-end: span 6; }
     .week .day [data-span="7"] {
       grid-column-end: span 7; }
+     .week .day [data-span="8"] {
+     grid-column-end: span 8; }
 
 .daily-calendar {
   display: grid;

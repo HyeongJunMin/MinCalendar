@@ -12,9 +12,7 @@ import com.example.demo.common.util.CustomCalendarUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CalUtilTest {
-
-	
+public class CalUtilTest {	
 	
 	@Test
 	public void currCal() {
@@ -27,8 +25,19 @@ public class CalUtilTest {
 				String k = it.next() + "";
 				System.out.println("k:" + k +", v:" + hm.get(k));
 			}
-		}
-		
-		
+		}		
+	}
+	
+	@Test
+	public void dayOfWeekTest() {
+		for(int i = 1 ; i < 25 ; i++ ) {
+			Map<String, Integer> hm = CustomCalendarUtil.getCurrentCalendarInfo(2019, 10, i);
+			
+			Iterator<?> it = hm.keySet().iterator();
+			while(it.hasNext()) {
+				String k = it.next() + "";
+				System.out.println("k:" + k +", v:" + hm.get(k));
+			}
+		}	
 	}
 }
