@@ -2,7 +2,7 @@
 -- V4: Create SCHE_DETAILS TABLE
 --
 --
-CREATE TABLE mhj_calendar.sche_details (
+CREATE TABLE sche_details (
   ID INT NOT NULL AUTO_INCREMENT,
   ID_SCHEDULES INT NOT NULL,
   SDATE DATETIME NOT NULL,
