@@ -4,12 +4,11 @@
 <%String ctx = request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
-<input type="hidden" id="_this_year" value="${todayCal.nowYear }">
-<input type="hidden" id="_this_month" value="${todayCal.nowMonth }">
+
 <div class="week weeks-in-month">
 	<!-- 이전 월 정보 작성 -->
 	<c:forEach begin="${todayCal.lastMonthLastDay - todayCal.dayOfWeek + 2 }" step="1" end="${todayCal.lastMonthLastDay }" var="i">
-		<div class="day"><h3 class="day-label">${i }</h3></div>
+		<div class="day prev-day"><h3 class="day-label">${i }</h3></div>
 	</c:forEach>
 	<!-- 당 월 정보 작성 -->
 	<c:forEach var="i" begin="1" end="${todayCal.lastDay }" step="1">		
@@ -23,7 +22,7 @@
 
 <script type="text/javascript">
 	//년 월 표시
-	var nowYearAndMonth = $("#_this_year").val() + '년 ' + $("#_this_month").val() + '월';
+	var nowYearAndMonth = $("#_curr_year").val() + '년 ' + $("#_curr_month").val() + '월';
 	$(".calendar-header h4").text( nowYearAndMonth );
 	console.log('now:' + nowYearAndMonth);
 </script>

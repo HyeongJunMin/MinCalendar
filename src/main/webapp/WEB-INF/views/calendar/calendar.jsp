@@ -19,13 +19,15 @@
 
 <link href='<%=ctx %>/css/calendar.css' rel='stylesheet' />
 <link href='<%=ctx %>/css/calendar_sub.css' rel='stylesheet' />
-<script type="text/javascript" src="<%=ctx %>/js/calendar.js"></script>
-<script type="text/javascript" src="<%=ctx %>/js/calendar_sub.js"></script>
 
+<script type="text/javascript" src="<%=ctx %>/js/calendar_sub.js"></script>
+<script type="text/javascript" src="<%=ctx %>/js/calendar.js"></script>
 
 </head>
 <body>
-
+<input type="hidden" id="_curr_year" value="${todayCal.nowYear }">
+<input type="hidden" id="_curr_month" value="${todayCal.nowMonth }">
+<input type="hidden" id="_curr_date" value="${todayCal.nowDate }">
 <div class="calendar-container">
 	<div class="calendar-header">
 		<button class="btn btn-light">Today</button>

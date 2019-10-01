@@ -37,6 +37,7 @@ public class CalController {
 		int reqDate = (calReq.getReqDate() == 0 )?Calendar.getInstance().get(Calendar.DATE):calReq.getReqDate();
 		
 		model.addAttribute("todayCal", CustomCalendarUtil.getCurrentCalendarInfo(reqYear, reqMonth, reqDate) );
+		System.out.println("왔다! 년:" + reqYear +" , 월:" + reqMonth);
 		
 		return "calendar/calendar_month";
 	}
