@@ -1,7 +1,7 @@
 package com.example.demo.calendar.controller;
 
-import java.util.Calendar;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.calendar.model.CalReqDTO;
 import com.example.demo.common.util.CustomCalendarUtil;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping(value = "calendar")
 public class CalController {
+	
+	private Logger log = LoggerFactory.getLogger(CalController.class);
 
 	@GetMapping(value = "/exam")
 	public String calendarExam() {
