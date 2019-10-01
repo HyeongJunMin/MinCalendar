@@ -46,6 +46,10 @@ public class CalController {
 //			e.printStackTrace();
 //			log.warn("Exception occured");
 //		}
+		
+		calReq.setReqYear(2019);
+		calReq.setReqMonth(10);
+		calReq.setReqDate(1);
 				
 //		model.addAttribute("todayCal", CustomCalendarUtil.getCurrentCalendarInfo(reqYear, reqMonth, reqDate) );
 		model.addAttribute("todayCal", CustomCalendarUtil.getCurrentCalendarInfo(calReq.getReqYear(), calReq.getReqMonth(), calReq.getReqDate() ) );
