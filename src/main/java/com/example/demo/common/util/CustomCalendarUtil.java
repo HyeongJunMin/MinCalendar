@@ -1,7 +1,9 @@
 package com.example.demo.common.util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -81,6 +83,31 @@ public class CustomCalendarUtil {
 		}
 		
 		return scheCalMap;
+    }
+    
+    /**시작일과 종료일을 매개변수로 받아 두 날짜의 차이 일 수를 리턴하는 메소드
+     * 형식 : yyyy-mmm-dd
+     * @param sDay
+     * @param eDay
+     * @return
+     */
+    public static int getDaysOfSchedule(String sDay, String eDay){    	
+    	try {
+    		// 날짜를 data타입으로 변경
+    		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+    		Date sDate = fm.parse(sDay);
+    		Date eDate = fm.parse(eDay);
+    		
+    		// 시간차이를 시간,분,초를 곱한 값으로 나누면 하루 단위가 나옴
+    		long diff = eDate.getTime() - sDate.getTime();
+    		long diffDays = diff / (24 * 60 * 60 * 1000);
+        	
+        	return (int)diffDays + 1;    		
+    	}catch (Exception e) {
+			// TODO: handle exception
+    		e.printStackTrace();
+    		return 0;
+		}
     }
     
     /**캘린더 렌더링에 필요한 값을 해시맵에 저장하는 메소드

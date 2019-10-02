@@ -19,7 +19,7 @@
     
     <sql id="getSchedulesByMonthSql">
     	<![CDATA[
-			SELECT A.ID AS ID, TITLE, CONTENT, RDATE, SDATE, EDATE 
+			SELECT A.ID AS ID, TITLE, CONTENT, SCHE_TYPE, RDATE, SDATE, EDATE 
 			FROM 
 				(SELECT * FROM mhj_calendar.schedules) A,
 				(
