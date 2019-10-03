@@ -11,4 +11,9 @@ public class CommonController {
 	public String welcome() {
 		return "welcome";
 	}
+	
+	@RequestMapping(value = "modaltest")
+	public String modalTest() {
+		return "tests/modaltest";
+	}
 }

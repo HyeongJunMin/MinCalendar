@@ -61,20 +61,28 @@ public class CustomCalendarUtil {
     	Map<String, List<SchedulesDispDTO>> scheCalMap = new HashMap<String, List<SchedulesDispDTO>>();
 		for(SchedulesDispDTO scheItem : scheList) {
 			String sdate = scheItem.getSdate().split(" ")[0];	//키값 산출
-			
-			sdate = (sdate.split("-")[1].equals(todayCal.get("nowMonth")+""))
+//			System.out.println("sdate Origin : " + sdate);
+//			System.out.println("맵만들기전:   sdate.split(\"-\")[1].substring(1, 2):" + sdate.split("-")[1].substring(1, 2) + " todayCal.get(\"nowMonth\"):" + todayCal.get("nowMonth"));
+//			System.out.println("sdate split :" + sdate.split("-")[1].substring(1, 2));			
+			String thisMonth = (sdate.split("-")[1].charAt(0) == '0')?sdate.split("-")[1].substring(1, 2):sdate.split("-")[1];
+//			System.out.println("thisMonth : " + thisMonth + "   ," + thisMonth.equals(todayCal.get("nowMonth")+"") + "  ,  " + (thisMonth == (todayCal.get("nowMonth")+"")));
+						
+			sdate = (thisMonth.equals(todayCal.get("nowMonth")+""))
 					?sdate
 					:todayCal.get("lastYear") + "-" + String.format("%02d", todayCal.get("lastMonth")) + "-" + String.format("%02d", ( todayCal.get("lastMonthLastDay") - todayCal.get("dayOfWeek") + 2 ));
 				    	
-			System.out.println(scheItem.getSdate().split(" ")[0]);
+//			System.out.println("만든다 맵!" + sdate + " todayLastMonth:" + todayCal.get("lastMonth"));
+//			System.out.println(scheItem.getSdate().split(" ")[0]);
 			if( scheCalMap.get(sdate) == null ) {//키가 없는 경우
 				scheCalMap.put(sdate, new ArrayList<SchedulesDispDTO>() );
 				scheCalMap.get(sdate).add(scheItem);				
 			}else {	//키가 있는 경우
 				scheCalMap.get(sdate).add(scheItem);
 			}
+			
+//			System.out.println();System.out.println();System.out.println();System.out.println();
 		}
-		System.out.println("맵사이즈 : " + scheCalMap.size());
+//		System.out.println("맵사이즈 : " + scheCalMap.size());
 		
 		Iterator<String> it = scheCalMap.keySet().iterator();
 		while(it.hasNext()) {
@@ -85,7 +93,7 @@ public class CustomCalendarUtil {
 		return scheCalMap;
     }
     
-    /**시작일과 종료일을 매개변수로 받아 두 날짜의 차이 일 수를 리턴하는 메소드
+    /**시작일과 종료일을 매개변수로 받아 일정의 날짜 수를 리턴하는 메소드
      * 형식 : yyyy-mmm-dd
      * @param sDay
      * @param eDay

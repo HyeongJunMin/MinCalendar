@@ -98,6 +98,11 @@ function getDayCalendar(year, month, date){
 	$(".daily-calendar-wrap").load('/calendar/day', calInfo);
 }
 
+//새 스케쥴 추가를 위한 모달창 load
+function getNewScheModalView(){
+	$("#cal_new_sche_model_wrap").load('/calendar/newsche');
+}
+
 function currView(){	//현재 뷰가 month인지 day인지 문자열로 리턴
 	if( $("#month").attr('class').includes( 'active' ) === true ){
 		return 'month';

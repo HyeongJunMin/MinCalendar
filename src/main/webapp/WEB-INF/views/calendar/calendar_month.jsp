@@ -17,15 +17,24 @@
 		
 		<c:choose>
 			<c:when test="${fn:contains(scheCalMapKeySet, dateString) }">
+				<c:set var="scheDisp" value="${scheCalMap[dateString][0]}"/>
+				<c:choose>
+					<c:when test="${scheDisp.sche_type == '일반' }"><c:set var="scheClassType" value="event event-start event-end"/><c:set var="scheMarking" value="event-marking"/></c:when>
+					<c:when test="${scheDisp.sche_type == '연속' }"><c:set var="scheClassType" value="event-consecutive event-start event-end"/><c:set var="scheMarking" value="event-consecutive-marking"/></c:when>
+					<c:when test="${scheDisp.sche_type == '반복' }"><c:set var="scheClassType" value="event-repeated event-start event-end"/><c:set var="scheMarking" value="event-repeated-marking"/></c:when>
+				</c:choose>
 				<div class="day prev-day">
 					<h3 class="day-label">${i }</h3>
-					<div class="event-repeated event-start event-end" data-span="8"
+					<div class="${scheClassType }" data-span="${scheDisp.days }"
 						data-toggle="popover" data-html="true"
-						data-content='<div class="content-line"><div class="event-repeated-marking"></div><div class="title"><h5>일정 1</h5>
-								<h7 class="reservation">2019년 9월 15일 – 17일<span class="reservation-time">⋅오후 2:00~ 3:00</span><span class="repeat-message">⋅매월 반복</span></div>
+						data-content='<div class="content-line"><div class="${scheMarking }"></div>
+								<div class="title"><h5>${scheDisp.title }</h5>
+								<h7 class="reservation">${scheDisp.syear }년 ${scheDisp.smonth }월 ${scheDisp.sday }일 – 17일
+								<span class="reservation-time">⋅오후 2:00~ 3:00</span>
+								<span class="repeat-message">⋅매월 반복</span></div>
 				        		</div><div class="content-line"><i class="material-icons">notes</i>
-				        		<div class="title"><h7 class="reservation">스케쥴 메모, 설명이 나타납니다.</div></div>
-				        		'>반복 일정 2</div>
+				        		<div class="title"><h7 class="reservation">${scheDisp.content }</div></div>
+				        		'>${scheDisp.sche_type } 일정</div>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -38,15 +47,49 @@
 		<fmt:formatNumber var="nowDate" minIntegerDigits="2" value="${i}" type="number"/>
 		<fmt:formatNumber var="nowMonth" minIntegerDigits="2" value="${todayCal.nowMonth}" type="number"/>
 		<c:set var="dateString" value="${todayCal.nowYear }-${nowMonth}-${nowDate }"/>		
-				
+		
 		<c:choose>
 			<c:when test="${fn:contains(scheCalMapKeySet, dateString) }">
+			<%-- 
+				<c:set var="scheDisp" value="${scheCalMap[dateString][0]}"/>
+				<c:choose>
+					<c:when test="${scheDisp.sche_type == '일반' }"><c:set var="scheClassType" value="event event-start event-end"/></c:when>
+					<c:when test="${scheDisp.sche_type == '연속' }"><c:set var="scheClassType" value="event-consecutive event-start event-end"/></c:when>
+					<c:when test="${scheDisp.sche_type == '반복' }"><c:set var="scheClassType" value="event-repeated event-start event-end"/></c:when>
+				</c:choose>
 				<div class="day curr-day">
 					<h3 class="day-label">${i }</h3>
-					<div class="event-repeated event-start event-end" data-span="8"
+					<div class="${scheClassType }" data-span="${scheDisp.days }"
 						data-toggle="popover" data-html="true"
-						data-content=''>반복 일정 2</div>
+						data-content='
+						
+						
+						
+						'>${scheDisp.sche_type } 일정</div>
 				</div>
+				 --%>
+				<c:set var="scheDispList" value="${scheCalMap[dateString] }"/>
+				
+					<div class="day curr-day">
+						<h3 class="day-label">${i }</h3>
+						<c:forEach var="scheDisp" items="${scheDispList }">
+							<c:choose>
+								<c:when test="${scheDisp.sche_type == '일반' }"><c:set var="scheClassType" value="event event-start event-end"/><c:set var="scheMarking" value="event-marking"/></c:when>
+								<c:when test="${scheDisp.sche_type == '연속' }"><c:set var="scheClassType" value="event-consecutive event-start event-end"/><c:set var="scheMarking" value="event-consecutive-marking"/></c:when>
+								<c:when test="${scheDisp.sche_type == '반복' }"><c:set var="scheClassType" value="event-repeated event-start event-end"/><c:set var="scheMarking" value="event-repeated-marking"/></c:when>
+							</c:choose>
+							<div class="${scheClassType }" data-span="${scheDisp.days }"
+								data-toggle="popover" data-html="true"
+								data-content='<div class="content-line"><div class="${scheMarking }"></div>
+								<div class="title"><h5>${scheDisp.title }</h5>
+								<h7 class="reservation">${scheDisp.syear }년 ${scheDisp.smonth }월 ${scheDisp.sday }일 – ${scheDisp.emonth }월 ${scheDisp.eday }일
+								<span class="reservation-time">⋅ ${scheDisp.shour }: ${scheDisp.smonth } ~ ${scheDisp.ehour }: ${scheDisp.emonth }</span>
+								<span class="repeat-message">⋅매월 반복</span></div>
+				        		</div><div class="content-line"><i class="material-icons">notes</i>
+				        		<div class="title"><h7 class="reservation">${scheDisp.content }</div></div>
+				        		'>${scheDisp.sche_type } 일정</div>
+						</c:forEach>
+					</div>				
 			</c:when>
 			<c:otherwise>
 				<div class="day curr-day"><h3 class="day-label">${i }</h3></div>	
@@ -87,6 +130,7 @@
 			+ $("#_curr_month").val() + '월';
 	$(".calendar-header h4").text(nowYearAndMonth);
 	console.log('now:' + nowYearAndMonth);
+	addEventListners();
 </script>
 
 <!-- (i + dayOfWeek - 1 ) % 7 === 0 && i != lastDay -->

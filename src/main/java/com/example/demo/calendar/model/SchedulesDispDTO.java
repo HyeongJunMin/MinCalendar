@@ -110,4 +110,45 @@ public class SchedulesDispDTO implements Serializable {
 				+ ", rdate=" + rdate + ", days=" + getDays() + ", sdate=" + sdate + ", edate=" + edate + "]";
 	}	
 	
+	
+	/* 연-월-일-시-분 상세내용을 보여줄 수 있는 getter */
+	public String getSyear() {
+		return sdate.split(" ")[0].substring(0,4);
+	}
+	
+	public String getSmonth() {
+		return (sdate.split(" ")[0].substring(5,7).charAt(0) == '0')?sdate.split(" ")[0].substring(6,7):sdate.split(" ")[0].substring(5,7);
+	}
+
+	public String getSday() {
+		return (sdate.split(" ")[0].substring(8,10).charAt(0) == '0')?sdate.split(" ")[0].substring(9,10):sdate.split(" ")[0].substring(8,10);
+	}
+	
+	public String getShour() {
+		return (sdate.split(" ")[1].substring(0,2).charAt(0) == '0')?sdate.split(" ")[1].substring(1,2):sdate.split(" ")[1].substring(0,2);
+	}
+	
+	public String getSminutes() {
+		return (sdate.split(" ")[1].substring(3,5).charAt(0) == '0')?sdate.split(" ")[1].substring(4,5):sdate.split(" ")[1].substring(3,5);
+	}
+	
+	public String getEyear() {
+		return edate.split(" ")[0].substring(0,4);
+	}
+	
+	public String getEmonth() {
+		return (edate.split(" ")[0].substring(5,7).charAt(0) == '0')?edate.split(" ")[0].substring(6,7):edate.split(" ")[0].substring(5,7);
+	}
+
+	public String getEday() {
+		return (edate.split(" ")[0].substring(8,10).charAt(0) == '0')?edate.split(" ")[0].substring(9,10):edate.split(" ")[0].substring(8,10);
+	}
+	
+	public String getEhour() {
+		return (edate.split(" ")[1].substring(0,2).charAt(0) == '0')?edate.split(" ")[1].substring(1,2):edate.split(" ")[1].substring(0,2);
+	}
+	
+	public String getEminutes() {
+		return (edate.split(" ")[1].substring(3,5).charAt(0) == '0')?edate.split(" ")[1].substring(4,5):edate.split(" ")[1].substring(3,5);
+	}
 }

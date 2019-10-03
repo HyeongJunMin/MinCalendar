@@ -7,16 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Calendar Main</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+<jsp:include page="./sub/externalresources.jsp"></jsp:include>
 <link href='<%=ctx %>/css/calendar.css' rel='stylesheet' />
 <link href='<%=ctx %>/css/calendar_sub.css' rel='stylesheet' />
 
@@ -25,6 +16,7 @@
 
 </head>
 <body>
+
 <input type="hidden" id="_curr_year" value="${todayCal.nowYear }">
 <input type="hidden" id="_curr_month" value="${todayCal.nowMonth }">
 <input type="hidden" id="_curr_date" value="${todayCal.nowDate }">
@@ -79,6 +71,10 @@
 	</div>
 </div>
 
+<!-- 새 스케쥴 모달 영역 -->
+<div id="cal_new_sche_model_wrap">
+	<jsp:include page="./sub/calendar_new_modal.jsp"></jsp:include>
+</div>
 
 
 </body>
