@@ -5,6 +5,10 @@ import java.util.List;
 import com.example.demo.calendar.model.CalReqDTO;
 import com.example.demo.calendar.model.SchedulesDispDTO;
 
+/**일정정보를 제공하는 Data Access Object 인터페이스
+ * @author minhj
+ *
+ */
 public interface CalendarDAO {
 	
 	/**매개변수로 받은 년-월에 해당하는 스케줄 리턴

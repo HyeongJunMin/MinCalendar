@@ -10,8 +10,8 @@ import com.example.demo.calendar.model.CalReqDTO;
 import com.example.demo.calendar.model.SchedulesDispDTO;
 import com.example.demo.calendar.service.CalendarService;
 
-/**
- * @author bitcamp88
+/**일정정보를 제공하는 서비스 클래스
+ * @author minhj
  *
  */
 @Service

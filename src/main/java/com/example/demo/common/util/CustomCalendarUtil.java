@@ -14,14 +14,19 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.example.demo.calendar.model.SchedulesDispDTO;
 
+/**달력에 필요로 하는 데이터드를 가공하는 클래스.
+ * @author minhj
+ *
+ */
 public class CustomCalendarUtil {
 
-	//요일 배열을 리턴하는 메소드
+    /**한글로 된 요일 배열을 리턴하는 메소드
+     * @return
+     */
     public static String[] getDayNames() {
         String[] dayNames = {"일", "월", "화", "수", "목", "금", "토"};
         return dayNames;
-    }
-    
+    }    
 
     /**캘린더 렌더링에 필요한 값을 해시맵 타입으로 리턴하는 메소드
      * 시작 요일, 마지막 날짜, 총 주 수
@@ -29,10 +34,8 @@ public class CustomCalendarUtil {
      */
     public static Map<String, Integer> getCurrentCalendarInfo(){
     	
-    	Map<String, Integer> calData = new HashMap<String, Integer>();
-    	
-    	Calendar today = Calendar.getInstance();
-    	
+    	Map<String, Integer> calData = new HashMap<String, Integer>();    	
+    	Calendar today = Calendar.getInstance();    	
     	setMapData(calData, today);
     	
     	return calData;
@@ -44,10 +47,9 @@ public class CustomCalendarUtil {
      */
     public static Map<String, Integer> getCurrentCalendarInfo(int year, int month, int date){
     	
-    	Map<String, Integer> calData = new HashMap<String, Integer>();
-    	
+    	Map<String, Integer> calData = new HashMap<String, Integer>();    	
     	Calendar today = Calendar.getInstance();
-    	today.set(year, month - 1, date);
+    	today.set(year, month - 1, date);    	
     	
     	setMapData(calData, today);
     	

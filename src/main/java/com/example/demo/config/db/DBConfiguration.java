@@ -15,6 +15,10 @@ import org.springframework.context.annotation.PropertySource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+/**DB연결 설정 클래스
+ * @author minhj
+ *
+ */
 @Configuration
 @PropertySource("classpath:/application.properties")
 public class DBConfiguration {

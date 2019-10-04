@@ -1,6 +1,5 @@
 package com.example.demo.calendar.dao.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -14,6 +13,10 @@ import com.example.demo.calendar.dao.CalendarDAO;
 import com.example.demo.calendar.model.CalReqDTO;
 import com.example.demo.calendar.model.SchedulesDispDTO;
 
+/**일정정보를 제공하는 Data Access Object 클래스
+ * @author minhj
+ *
+ */
 @Repository
 public class CalendarDAOImpl implements CalendarDAO {
 

@@ -1,6 +1,5 @@
 package com.example.demo.calendar.controller;
 
-import java.net.URLDecoder;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,10 @@ import com.example.demo.calendar.service.CalendarService;
 import com.example.demo.common.util.CustomCalendarUtil;
 
 
+/**달력 뷰를 만들어 응답하고 일정 정보를 보여주는 컨트롤러
+ * @author minhj
+ *
+ */
 @Controller
 @RequestMapping(value = "/calendar")
 public class CalController {
@@ -32,11 +35,18 @@ public class CalController {
 	@Autowired
 	private CalendarService calendarService;
 
+	/**달력 예제 뷰를 리턴하는 메소드 
+	 * @return
+	 */
 	@GetMapping(value = "/exam")
 	public String calendarExam() {
 		return "CalendarExam";
 	}
 	
+	/**달력 메인 뷰를 리턴하는 메소드
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/main")
 	public String calendarMain(Model model) {
 		log.info("Calendar main view");
@@ -46,11 +56,15 @@ public class CalController {
 		
 		return "calendar/calendar";
 	}
-	
-		
+			
+	/**월 달력 정보와 일정정보를 리턴하는 메소드. jQuery load함수를 통해 불러온다.
+	 * @param model
+	 * @param calReq
+	 * @return
+	 */
 	@GetMapping(value = "/month")
 	public String calendarMonth(Model model, CalReqDTO calReq) {
-		log.info("Calendar month view");
+		log.info("[calendarMonth] Calendar month view");
 						
 		
 		//요청날짜 정보가 없으면 현재날짜로 설정하여 모델에 추가
@@ -70,9 +84,14 @@ public class CalController {
 		return "calendar/calendar_month";
 	}
 	
+	/**일 달력 정보와 일정 정보를 리턴하는 메소드. jQuery load함수를 통해 불러온다.
+	 * @param model
+	 * @param calReq
+	 * @return
+	 */
 	@GetMapping(value = "/day")
 	public String calendarDay(Model model, CalReqDTO calReq) {
-		log.info("Calendar day view " + calReq);
+		log.info("[calendarDay] Calendar day view " + calReq);
 		
 		//요청날짜 정보가 없으면 현재날짜로 설정하여 모델에 추가
 		model.addAttribute("todayCal", getCalendarInfo(calReq) );
@@ -85,22 +104,30 @@ public class CalController {
 		return "calendar/calendar_day";
 	}
 	
+	/**Ajax 통신을 통해 클라이언트에서 작성한 내용을 DB에 저장하는 메소드.
+	 * 성공은 1, 실패는 0을 리턴한다.
+	 * 
+	 * @param json
+	 * @return
+	 * @throws Exception
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/save/schedule", method = RequestMethod.POST)
 	public String saveScheduleAjax(@RequestBody String json) throws Exception {
 		log.info("[saveScheduleAjax] ajax request ");
 		
 		SchedulesDispDTO sDDTO = SchedulesDispDTO.convertJsonStringToDTO(json);
-		log.info("sddto : " + sDDTO);
 		
 		sDDTO = calendarService.insertNewSchedules(sDDTO);
 		int result = calendarService.insertNewScheDetails(sDDTO);
 		
 		return result + "";
 	}
-	
-	
-	
+		
+	/**CalReqDTO를 초기화해주는 메소드. DTO에 유효한 날짜가 없으면 조회시점의 날짜로 설정한다.
+	 * @param calReq
+	 * @return
+	 */
 	private Map<String, Integer> getCalendarInfo(CalReqDTO calReq){		
 		
 		//요청날짜 정보가 없으면 현재날짜로 설정
