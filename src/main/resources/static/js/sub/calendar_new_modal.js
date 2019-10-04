@@ -23,7 +23,6 @@ $(function(){
 			$("#_edate_hm").val('23:59');
 			$("#_edate_hm, #_sdate_hm").attr('readonly','readonly');
 		}else{
-			console.log(false);
 		}
 	});
 	
@@ -50,7 +49,9 @@ function saveSchedule(){
 		async : false,
 		data : queryString,
 		success : function( resp ) {
-			console.log(resp);			
+			if(resp === '1' || resp === 1){//통신에 성공하여 DB저장까지 성공한 경우
+				loadCurrentCalendar();
+			}
 		},
 		error : function() {
 			alert('통신에러 발생.');

@@ -18,4 +18,16 @@ public interface CalendarService {
 	 * @return
 	 */
 	public List<SchedulesDispDTO> getSchedulesByDay(CalReqDTO calReqDto);
+		
+	/**매개변수로 받는 스케줄 정보 저장하고 저장된 pk(컬럼명=id)을 매개변수 dto에 set
+	 * @param scheDispDto
+	 * @return
+	 */
+	public SchedulesDispDTO insertNewSchedules(SchedulesDispDTO scheDispDto);
+	
+	/**매개변수로 받은 스케줄 디테일을 DB에 저장
+	 * @param scheDispDto
+	 * @return
+	 */
+	public int insertNewScheDetails(SchedulesDispDTO scheDispDto);
 }

@@ -15,6 +15,7 @@ $(function(){
 	
 	//이전 버튼 클릭 이벤트
 	$("#move_prev").click(function(){
+		console.log('move_prev');
 		initCurrDate();		
 		
 		var now_date = new Date(currYear + '-' + setMonth(currMonth) + '-' + currDate);
@@ -59,7 +60,6 @@ $(function(){
 	});
 });
 
-//현재 날짜에 맞는 뷰 로드
 function loadCurrentCalendar(){
 	if( currView() === 'month' ){	//현재 뷰가 월인 경우			
 		var now_date = new Date();
@@ -85,21 +85,12 @@ function loadCurrentCalendar(){
 	}
 }
 
-//일정 바 마우스아웃 이벤트 : 상세내용 삭제
-function addMouseOutEventListenerToEventBar(){
-	$(".event-start").mouseout(function(){
-		//$(this).popover('hide');
-	});
-}
-
 function setCalendarViewAndRefreshCurrDate(now_date){
 	
 }
 
 //월 달력 load
-function getMonthCalendar(year, month){	
-	$(".daily-calendar").hide();
-	$(".weeks-in-month").show();
+function getMonthCalendar(year, month){		
 	//현재 달력 삭제
 	$(".weeks-in-month").remove();	
 	//조건에 맞는 새 달력 불러오기
@@ -109,9 +100,6 @@ function getMonthCalendar(year, month){
 
 //일 달력 load
 function getDayCalendar(year, month, date){
-	$(".weeks-in-month").hide();
-	$(".daily-calendar").show();
-	
 	//현재 달력 삭제
 	$(".daily-calendar").remove();
 	//조건에 맞는 새 달력 불러오기

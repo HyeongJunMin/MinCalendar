@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +17,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DateTest {
 
 	@Test
+	public void addMonthes() {
+		String sdate = "2019-10-25 14:00:00";
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+		
+		for(int i = 0 ; i < 12 ; i ++ ) {
+			DateTime sd = formatter.parseDateTime(sdate);
+			
+			System.out.println(sd.plusMonths(i).toString(formatter));
+		}
+		
+	}
+	
+	
+	//@Test
 	public void currCal() {
 
 		String date1 = "2016-09-21";

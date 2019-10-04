@@ -26,6 +26,16 @@
 			WHERE A.ID = B.ID_SCHEDULES			
     </sql>
 
+	<sql id="insertNewSchedulesSql">
+		INSERT INTO MHJ_CALENDAR.SCHEDULES (TITLE, CONTENT, SCHE_TYPE)
+		VALUES (#{title}, #{content}, #{sche_type})
+	</sql>
+	
+	<sql id="insertNewScheDetailsSql">
+		INSERT INTO MHJ_CALENDAR.SCHE_DETAILS (ID_SCHEDULES, SDATE, EDATE)
+		VALUES (#{id}, #{sdate}, #{edate})
+	</sql>
+
 	<!-- 테스트용. 모든 스케쥴 리턴. -->
     <select id="getAllSchedules" resultType="java.lang.String">
         SELECT * FROM SCHEDULES
@@ -43,6 +53,15 @@
     	<include refid="getSchedulesByDaySql"/>
     </select>
     
+    <!-- 매개변수로 받는 스케줄 정보 저장하고 저장된 pk(컬럼명=id)을 매개변수 dto에 set -->
+    <insert id="insertNewSchedules" parameterType="com.example.demo.calendar.model.SchedulesDispDTO"
+     useGeneratedKeys="true" keyProperty="id">
+		<include refid="insertNewSchedulesSql"/>
+	</insert>
     
+    <!-- 매개변수로 받은 스케줄 디테일 정보 DB에 저장 -->
+    <insert id="insertNewScheDetails" parameterType="com.example.demo.calendar.model.SchedulesDispDTO">
+    	<include refid="insertNewScheDetailsSql"></include>
+    </insert>
 
 </mapper>

@@ -93,8 +93,10 @@ public class CalController {
 		SchedulesDispDTO sDDTO = SchedulesDispDTO.convertJsonStringToDTO(json);
 		log.info("sddto : " + sDDTO);
 		
+		sDDTO = calendarService.insertNewSchedules(sDDTO);
+		int result = calendarService.insertNewScheDetails(sDDTO);
 		
-		return "1";
+		return result + "";
 	}
 	
 	

@@ -44,7 +44,8 @@ function addEventListners(){
 	//월 달력 클릭 이벤트(일정 추가)
 	$(".week").click(function(event){
 		var eqNum = getEqInWeek(event);
-
+		console.log("eqNum : " + eqNum);
+		console.log($(this).children().eq(eqNum).children().eq(0).text());
 		var clkDay = $(this).children().eq(eqNum).children().eq(0).text();
 		clkDay = (clkDay.length > 1)?clkDay:'0'+clkDay;
 		
