@@ -10,6 +10,10 @@ import com.example.demo.calendar.model.CalReqDTO;
 import com.example.demo.calendar.model.SchedulesDispDTO;
 import com.example.demo.calendar.service.CalendarService;
 
+/**
+ * @author bitcamp88
+ *
+ */
 @Service
 public class CalendarServiceImpl implements CalendarService {
 
@@ -24,6 +28,16 @@ public class CalendarServiceImpl implements CalendarService {
 	public List<SchedulesDispDTO> getSchedulesByMonth(CalReqDTO calReqDto) {
 		// TODO Auto-generated method stub
 		return calendarDAO.getSchedulesByMonth(calReqDto);
+	}
+
+	/**매개변수로 받은 년-월-일에 해당하는 스케줄 리턴
+	 * @param calReqDto
+	 * @return
+	 */
+	@Override
+	public List<SchedulesDispDTO> getSchedulesByDay(CalReqDTO calReqDto) {
+		// TODO Auto-generated method stub
+		return calendarDAO.getSchedulesByDay(calReqDto);
 	}
 
 }

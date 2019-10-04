@@ -16,14 +16,56 @@ $(function(){
 		$(this).removeClass('is-invalid');
 	});
 	
+	//하루종일 체크 시 시간설정
+	$("#_chk_isAllDaySche").change(function(){		
+		if( true === $("#_chk_isAllDaySche").is(":checked") ){
+			$("#_sdate_hm").val('00:00');
+			$("#_edate_hm").val('23:59');
+			$("#_edate_hm, #_sdate_hm").attr('readonly','readonly');
+		}else{
+			console.log(false);
+		}
+	});
+	
 	//일정 만들기 버튼 클릭 시 이벤트
 	$("#confirm_new_sche").click(function(){
-		ifHasEmpty();//빈칸검사
-		
+		if( ifHasEmpty() == false ){//빈칸검사
+			return;
+		}
+		saveSchedule();
 		
 	});	
 });
 
+function saveSchedule(){
+	
+	//폼 직렬화 설정
+	var queryString = $("form[name=frm_save_schedule]").serialize() ;
+	
+	$.ajax({
+		contentType : 'application/json',
+		dataType : 'json',
+		url : '/calendar/save/schedule',
+		type : 'post',
+		async : false,
+		data : queryString,
+		success : function( resp ) {
+			console.log(resp);			
+		},
+		error : function() {
+			alert('통신에러 발생.');
+		}
+	});
+}
+
+//ajax통신으로 보낼 데이터 세팅
+function setViewData(){
+	var viewData = {};
+	// data[키] = 밸류
+	viewData["head"] = 'sdfsdfsdf';	
+	
+	return viewData;
+}
 //빈칸검사 함수
 function ifHasEmpty(){
 	var inputComps = $("#registerSchedule input[type=text], textarea");
@@ -32,8 +74,10 @@ function ifHasEmpty(){
 		if( inputComps.eq(i).val().length < 1 ){
 			inputComps.eq(i).addClass('is-invalid');
 			inputComps.eq(i).focus();
-			return;
+			return false;
 		}
 	}
+	
+	return true;
 }
 

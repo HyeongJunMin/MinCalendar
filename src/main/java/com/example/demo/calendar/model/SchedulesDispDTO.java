@@ -1,9 +1,6 @@
 package com.example.demo.calendar.model;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.net.URLDecoder;
 
 import com.example.demo.common.util.CustomCalendarUtil;
 
@@ -12,9 +9,8 @@ import com.example.demo.common.util.CustomCalendarUtil;
  * @author minhj
  *
  */
-@SuppressWarnings("serial")
-public class SchedulesDispDTO implements Serializable {
-
+public class SchedulesDispDTO {
+	
 	//SCHEDULE 테이블 컬럼
 	private int id;			//고유값
 	private String title;	//제목
@@ -29,7 +25,7 @@ public class SchedulesDispDTO implements Serializable {
 	
 	public SchedulesDispDTO() { }
 
-	public SchedulesDispDTO(int id, String title, String content, String sche_type, String rdate,int days, String sdate,	String edate) {
+	public SchedulesDispDTO(int id, String title, String content, String sche_type, String rdate, int days, String sdate, String edate) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
@@ -150,5 +146,37 @@ public class SchedulesDispDTO implements Serializable {
 	
 	public String getEminutes() {
 		return (edate.split(" ")[1].substring(3,5).charAt(0) == '0')?edate.split(" ")[1].substring(4,5):edate.split(" ")[1].substring(3,5);
+	}
+	
+	
+	/* Ajax 통신으로 받은 json데이터를 SchedulesDispDTO 타입으로 변환 */
+	public static SchedulesDispDTO convertJsonStringToDTO(String json) throws Exception {
+		SchedulesDispDTO dto = new SchedulesDispDTO();
+		
+		String[] formData = URLDecoder.decode(json, "utf-8").split("&");
+		
+		for (int i = 0; i < formData.length; i++) {
+			System.out.println(formData[i]);
+		}
+		dto.setTitle( formData[0].split("=")[1]);//제목
+		dto.setContent( formData[1].split("=")[1]);//내용
+		
+		String sdate = formData[3].split("=")[1].replace(".", "-");//시작일
+		sdate += " " + formData[4].split("=")[1] + ":00";//시작 시:분:초
+		dto.setSdate(sdate);
+		
+		String edate = formData[5].split("=")[1].replace(".", "-");//종료일
+		edate += " " + formData[6].split("=")[1] + ":00";//종료 시:분:초
+		dto.setEdate(edate);
+		
+		if(formData.length == 8) {
+			dto.setSche_type("반복");
+		}else if(dto.getDays() > 1) {
+			dto.setSche_type("연속");
+		}else {
+			dto.setSche_type("일반");
+		}
+		
+		return dto;
 	}
 }

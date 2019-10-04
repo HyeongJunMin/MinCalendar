@@ -6,11 +6,12 @@
 <%String ctx = request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
-
+<head>
+<script type="text/javascript" src="<%=ctx%>/js/calendar_month.js"></script>
+</head>
 <div class="week weeks-in-month">
 	<!-- 이전 월 정보 작성 -->
 	<c:forEach begin="${todayCal.lastMonthLastDay - todayCal.dayOfWeek + 2}" step="1" end="${todayCal.lastMonthLastDay}" var="i" varStatus="j">
-		
 		<fmt:formatNumber var="lastDate" minIntegerDigits="2" value="${i}" type="number"/>
 		<fmt:formatNumber var="lastMonth" minIntegerDigits="2" value="${todayCal.lastMonth}" type="number"/>
 		<c:set var="dateString" value="${todayCal.lastYear }-${lastMonth}-${lastDate }"/>

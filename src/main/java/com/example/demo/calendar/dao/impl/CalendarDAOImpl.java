@@ -28,4 +28,14 @@ public class CalendarDAOImpl implements CalendarDAO {
 		return sqlSession.selectList(ns + "getSchedulesByMonth", calReqDto);
 	}
 
+	/**매개변수로 받은 년-월-일에 해당하는 스케줄 리턴
+	 * @param calReqDto
+	 * @return
+	 */
+	@Override
+	public List<SchedulesDispDTO> getSchedulesByDay(CalReqDTO calReqDto) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(ns + "getSchedulesByDay", calReqDto);
+	}
+	
 }

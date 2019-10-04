@@ -3,42 +3,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String ctx = request.getContextPath();
-	int dayOfWeekNum = Integer.parseInt( ((Map)request.getAttribute("todayCal")).get("dayOfWeek") + "" );
+	int dayOfWeekNum = Integer.parseInt( ((Map)request.getAttribute("todayCal")).get("dayOfWeekToday") + "" );
 	String dayOfWeekStr = CustomCalendarUtil.getDayNames()[dayOfWeekNum-1];
 %>
 <!DOCTYPE html>
 <html>
+<script type="text/javascript" src="<%=ctx%>/js/calendar_day.js"></script>
 <div class="daily-calendar">
 	<span class="day-name">${todayCal.nowDate }일 <%=dayOfWeekStr %>요일</span>
-	<div class="event-consecutive event-start event-end"
-		data-toggle="popover" data-html="true" data-placement="left"
-		data-content="<div class=&quot;content-line&quot;><div class=&quot;event-consecutive-marking&quot;></div><div class=&quot;title&quot;><h5>일정 1</h5><h7 class=&quot;reservation&quot;>2019년 9월 15일 – 17일</div>
-	        </div><div class=&quot;content-line&quot;><i class=&quot;material-icons&quot;>
-	notes
-	</i><div class=&quot;title&quot;><h7 class=&quot;reservation&quot;>스케쥴 메모, 설명이 나타납니다.</div>"
-		data-original-title="" title="">연속 일정 1</div>
-	<div class="event-consecutive event-start event-end"
-		data-toggle="popover" data-html="true" data-placement="left"
-		data-content="<div class=&quot;content-line&quot;><div class=&quot;event-consecutive-marking&quot;></div><div class=&quot;title&quot;><h5>일정 1</h5><h7 class=&quot;reservation&quot;>2019년 9월 15일 – 17일</div>
-	        </div><div class=&quot;content-line&quot;><i class=&quot;material-icons&quot;>
-	notes
-	</i><div class=&quot;title&quot;><h7 class=&quot;reservation&quot;>스케쥴 메모, 설명이 나타납니다.</div>"
-		data-original-title="" title="">연속 일정 2</div>
-	<div class="event event-start event-end" data-toggle="popover"
-		data-html="true" data-placement="left"
-		data-content="<div class=&quot;content-line&quot;><div class=&quot;event-marking&quot;></div><div class=&quot;title&quot;><h5>일정 1</h5><h7 class=&quot;reservation&quot;>2019년 9월 15일 – 17일<span class=&quot;reservation-time&quot;>⋅오후 2:00~ 3:00</span></div>
-	        </div><div class=&quot;content-line&quot;><i class=&quot;material-icons&quot;>
-	notes
-	</i><div class=&quot;title&quot;><h7 class=&quot;reservation&quot;>스케쥴 메모, 설명이 나타납니다.</div>"
-		data-original-title="" title="">일반 일정 3</div>
-	<div class="event-repeated event-start event-end" data-toggle="popover"
-		data-html="true" data-placement="left"
-		data-content="<div class=&quot;content-line&quot;><div class=&quot;event-repeated-marking&quot;></div><div class=&quot;title&quot;><h5>일정 1</h5><h7 class=&quot;reservation&quot;>2019년 9월 15일 – 17일<span class=&quot;reservation-time&quot;>⋅오후 2:00~ 3:00</span><span class=&quot;repeat-message&quot;>⋅매월 반복</span></div>
-	        </div><div class=&quot;content-line&quot;><i class=&quot;material-icons&quot;>
-	notes
-	</i><div class=&quot;title&quot;><h7 class=&quot;reservation&quot;>스케쥴 메모, 설명이 나타납니다.</div>"
-		data-original-title="" title="">반복 일정 1</div>
+		<div class="day curr-day">
+			<h3 class="day-label">${i }</h3>
+			<c:forEach var="scheDisp" items="${scheList }">
+				<c:choose>
+					<c:when test="${scheDisp.sche_type == '일반' }"><c:set var="scheClassType" value="event event-start event-end"/><c:set var="scheMarking" value="event-marking"/></c:when>
+					<c:when test="${scheDisp.sche_type == '연속' }"><c:set var="scheClassType" value="event-consecutive event-start event-end"/><c:set var="scheMarking" value="event-consecutive-marking"/></c:when>
+					<c:when test="${scheDisp.sche_type == '반복' }"><c:set var="scheClassType" value="event-repeated event-start event-end"/><c:set var="scheMarking" value="event-repeated-marking"/></c:when>
+				</c:choose>
+				<div class="${scheClassType }" data-toggle="popover" data-html="true" data-placement="left"
+					data-content='<div class="content-line"><div class="${scheMarking }"></div>
+								<div class="title"><h5>${scheDisp.title }</h5>
+								<h7 class="reservation">${scheDisp.syear }년 ${scheDisp.smonth }월 ${scheDisp.sday }일 – ${scheDisp.emonth }월 ${scheDisp.eday }일
+								<span class="reservation-time">⋅ ${scheDisp.shour }: ${scheDisp.smonth } ~ ${scheDisp.ehour }: ${scheDisp.emonth }</span>
+								<span class="repeat-message">⋅매월 반복</span></div>
+				        		</div><div class="content-line"><i class="material-icons">notes</i>
+				        		<div class="title"><h7 class="reservation">${scheDisp.content }</div></div>
+				        		'>${scheDisp.sche_type } 일정</div>
+			</c:forEach>
+		</div>
 </div>
+
+<script type="text/javascript">
+$(function () {
+    $('[data-toggle="popover"]').popover().on('inserted.bs.popover')
+});
+</script>
+
 </html>

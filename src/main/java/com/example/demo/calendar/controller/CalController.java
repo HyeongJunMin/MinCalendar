@@ -1,21 +1,21 @@
 package com.example.demo.calendar.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.net.URLDecoder;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.calendar.model.CalReqDTO;
 import com.example.demo.calendar.model.SchedulesDispDTO;
@@ -24,7 +24,7 @@ import com.example.demo.common.util.CustomCalendarUtil;
 
 
 @Controller
-@RequestMapping(value = "calendar")
+@RequestMapping(value = "/calendar")
 public class CalController {
 	
 	private Logger log = LoggerFactory.getLogger(CalController.class);
@@ -47,13 +47,12 @@ public class CalController {
 		return "calendar/calendar";
 	}
 	
-	@Autowired
-	SqlSession ss;
 		
 	@GetMapping(value = "/month")
 	public String calendarMonth(Model model, CalReqDTO calReq) {
 		log.info("Calendar month view");
 						
+		
 		//요청날짜 정보가 없으면 현재날짜로 설정하여 모델에 추가
 		Map<String, Integer> todayCal = getCalendarInfo(calReq);
 		model.addAttribute("todayCal", todayCal ); 
@@ -73,20 +72,39 @@ public class CalController {
 	
 	@GetMapping(value = "/day")
 	public String calendarDay(Model model, CalReqDTO calReq) {
-		log.info("Calendar day view");
+		log.info("Calendar day view " + calReq);
 		
 		//요청날짜 정보가 없으면 현재날짜로 설정하여 모델에 추가
-		model.addAttribute("todayCal", getCalendarInfo(calReq) ); 
+		model.addAttribute("todayCal", getCalendarInfo(calReq) );
+		
+		//년-월-일에 맞는 일정정보 모델에 추가
+		List<SchedulesDispDTO> scheList = calendarService.getSchedulesByDay(calReq);
+		log.info("list : " + scheList);
+		model.addAttribute("scheList", scheList);
 		
 		return "calendar/calendar_day";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/save/schedule", method = RequestMethod.POST)
+	public String saveScheduleAjax(@RequestBody String json) throws Exception {
+		log.info("[saveScheduleAjax] ajax request ");
+		
+		SchedulesDispDTO sDDTO = SchedulesDispDTO.convertJsonStringToDTO(json);
+		log.info("sddto : " + sDDTO);
+		
+		
+		return "1";
+	}
+	
+	
 	
 	private Map<String, Integer> getCalendarInfo(CalReqDTO calReq){		
 		
 		//요청날짜 정보가 없으면 현재날짜로 설정
 		int reqYear = 0, reqMonth = 0, reqDate = 0;
 		try {
-			reqYear = (calReq.getReqYear() == 0 )?Calendar.getInstance().get(Calendar.YEAR):calReq.getReqYear();
+			reqYear = (calReq.getReqYear() == 0 )? Calendar.getInstance().get(Calendar.YEAR) : calReq.getReqYear();
 			reqMonth = (calReq.getReqMonth() == 0 )?Calendar.getInstance().get(Calendar.MONTH):calReq.getReqMonth();
 			reqDate = (calReq.getReqDate() == 0 )?Calendar.getInstance().get(Calendar.DATE):calReq.getReqDate();
 		} catch(Exception e) {

@@ -21,7 +21,7 @@ $(function(){
 			refreshCurrDate(currYear, currMonth, 1);	//변경된 내용 설정
 			$(".calendar-header h4").text( $("#_curr_year").val() + '년 ' + $("#_curr_month").val() + '월' );
 		}else if( currView() === 'day' ){	//현재 뷰가 일인 경우
-			var now_date = new Date(currYear + '-' + currMonth);
+			var now_date = new Date();
 
 		    currYear = now_date.getFullYear();
 		    currMonth = (now_date.getMonth()+1)>9 ? ''+(now_date.getMonth()+1) : '0'+(now_date.getMonth()+1);
@@ -71,7 +71,12 @@ $(function(){
 			refreshCurrDate(now_date.getFullYear(), now_date.getMonth() + 1, 1);	//변경된 내용 설정
 			$(".calendar-header h4").text( $("#_curr_year").val() + '년 ' + $("#_curr_month").val() + '월' );
 		}else if( currView() === 'day' ){	//현재 뷰가 일인 경우 다음 일로 이동
+			now_date.setDate(now_date.getDate() + 1);	//date ++
 			
+			getDayCalendar(now_date.getFullYear(), now_date.getMonth() + 1, now_date.getDate());
+			
+			refreshCurrDate(now_date.getFullYear(), now_date.getMonth() + 1, now_date.getDate());	//변경된 내용 설정
+			$(".calendar-header h4").text( $("#_curr_year").val() + '년 ' + $("#_curr_month").val() + '월' );
 		}
 	});
 });

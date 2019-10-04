@@ -2,6 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- <mapper namespace="com.mde.app.common.dao"> -->
 <mapper namespace="schedules">
+	<sql id="getSchedulesByMonthSql">
+			SELECT A.ID AS ID, TITLE, CONTENT, SCHE_TYPE, RDATE, SDATE, EDATE 
+			FROM 
+				(SELECT * FROM mhj_calendar.schedules) A,
+				(
+				SELECT * FROM mhj_calendar.sche_details
+				WHERE date_format(SDATE, '%Y-%M-%D') <![CDATA[>=]]> date_format(#{fullFirstDate}, '%Y-%M-%D') 
+				AND date_format(EDATE, '%Y-%M-%D') <![CDATA[<=]]> date_format(#{fullLastDate}, '%Y-%M-%D')
+				) B 
+			WHERE A.ID = B.ID_SCHEDULES			
+    </sql>
+    
+    <sql id="getSchedulesByDaySql">
+			SELECT A.ID AS ID, TITLE, CONTENT, SCHE_TYPE, RDATE, SDATE, EDATE 
+			FROM 
+				(SELECT * FROM mhj_calendar.schedules) A,
+				(
+				SELECT * FROM mhj_calendar.sche_details
+				WHERE DATE(SDATE) <![CDATA[<=]]>#{fullFirstDate} 
+				AND DATE(EDATE) <![CDATA[>=]]> #{fullFirstDate}
+				) B 
+			WHERE A.ID = B.ID_SCHEDULES			
+    </sql>
+
 	<!-- 테스트용. 모든 스케쥴 리턴. -->
     <select id="getAllSchedules" resultType="java.lang.String">
         SELECT * FROM SCHEDULES
@@ -14,21 +38,11 @@
     </select>
     
     <!-- 매개변수로 받은 년-월-일에 해당하는 스케쥴 리턴 -->
-    <select id="getSchedulesByDate" parameterType="com.example.demo.calendar.model.CalReqDTO">
+    <select id="getSchedulesByDay" parameterType="com.example.demo.calendar.model.CalReqDTO"
+    	resultType="com.example.demo.calendar.model.SchedulesDispDTO">
+    	<include refid="getSchedulesByDaySql"/>
     </select>
     
-    <sql id="getSchedulesByMonthSql">
-    	<![CDATA[
-			SELECT A.ID AS ID, TITLE, CONTENT, SCHE_TYPE, RDATE, SDATE, EDATE 
-			FROM 
-				(SELECT * FROM mhj_calendar.schedules) A,
-				(
-				SELECT * FROM mhj_calendar.sche_details
-				WHERE date_format(SDATE, '%Y-%M-%D') >= date_format(#{fullFirstDate}, '%Y-%M-%D') 
-				AND date_format(EDATE, '%Y-%M-%D') <= date_format(#{fullLastDate}, '%Y-%M-%D')
-				) B 
-			WHERE A.ID = B.ID_SCHEDULES
-	 	]]>     	
-    </sql>
+    
 
 </mapper>

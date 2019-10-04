@@ -3,6 +3,8 @@ package com.example.demo.calendar.model;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.validation.constraints.NotNull;
+
 /**달력값을 요청할 때 연,월,일 정보를 전달하기 위한 용도
  * @author minhj
  *

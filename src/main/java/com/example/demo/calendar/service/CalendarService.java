@@ -12,4 +12,10 @@ public interface CalendarService {
 	 * @return
 	 */
 	public List<SchedulesDispDTO> getSchedulesByMonth(CalReqDTO calReqDto);
+	
+	/**매개변수로 받은 년-월-일에 해당하는 스케줄 리턴
+	 * @param calReqDto
+	 * @return
+	 */
+	public List<SchedulesDispDTO> getSchedulesByDay(CalReqDTO calReqDto);
 }
