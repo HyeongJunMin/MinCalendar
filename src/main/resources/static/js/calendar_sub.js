@@ -57,6 +57,18 @@ $(function(){
 			$(".calendar-header h4").text( $("#_curr_year").val() + '년 ' + $("#_curr_month").val() + '월' );
 		}
 	});
+	
+	//월 버튼 클릭 이벤트
+	$("#tab-month").click(function(){
+		$(".daily-calendar").hide();
+		$(".weeks-in-month").show();
+	});
+	//일 버튼 클릭 이벤트
+	$("#tab-day").click(function(){
+		$(".weeks-in-month").hide();
+		$(".daily-calendar").show();
+	});
+	
 });
 
 //현재 날짜에 맞는 뷰 로드
@@ -88,12 +100,8 @@ function loadCurrentCalendar(){
 //일정 바 마우스아웃 이벤트 : 상세내용 삭제
 function addMouseOutEventListenerToEventBar(){
 	$(".event-start").mouseout(function(){
-		//$(this).popover('hide');
-	});
-}
 
-function setCalendarViewAndRefreshCurrDate(now_date){
-	
+	});
 }
 
 //월 달력 load
@@ -103,7 +111,6 @@ function getMonthCalendar(year, month){
 	//현재 달력 삭제
 	$(".weeks-in-month").remove();	
 	//조건에 맞는 새 달력 불러오기
-	//$(".confirm_wrap").append('<div class="frm_personalform"></div>');
 	$(".monthly-calendar-body").load('/calendar/month', 'reqYear=' + year + '&reqMonth=' + month);	
 }
 
