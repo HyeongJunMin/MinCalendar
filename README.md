@@ -1,3 +1,6 @@
+# Programmers 2019년 잡페어 과제
+작성자 : 민형준
+
 # programmers 과제 테스트 템플릿 - Spring Boot
 
 programmers의 과제 테스트는 코드를 제출하면 자동으로 서버를 구성하여 실행해 볼 수 있는 환경을 제공합니다. 
